@@ -1,0 +1,80 @@
+/* index.css */
+
+/* Style de base */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+}
+
+/* En-tête */
+header {
+    background-color: #228B22;
+    padding: 10px 0;
+}
+
+header nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+}
+
+header nav ul li {
+    margin: 0 15px;
+}
+
+header nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+/* Section principale */
+main {
+    padding: 20px;
+    text-align: center;
+}
+
+h1 {
+    font-size: 2.5em;
+    color: #228B22;
+}
+
+h2 {
+    color: #007BFF;
+}
+
+p {
+    font-size: 1.2em;
+    color: darkcyan;
+}
+
+p1 {
+    font-size: 1.2em;
+    color: white;
+}
+/* Graphique */
+#windChart {
+    max-width: 800px;
+    margin: 50px auto;
+}
+
+canvas {
+    width: 100% !important; /* Prend toute la largeur disponible */
+    max-width: 800px; /* Ajuste selon tes besoins */
+    height: 400px !important; /* Augmente la hauteur */
+    display: block;
+    margin: 0 auto; /* Centre le graphique */
+}
+
+/* Pied de page */
+footer {
+    background-color: #228B22;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
