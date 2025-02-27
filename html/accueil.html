@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Innov'air</title>
+    <!-- Importation de Chart.js pour le graphique -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Importation de jQuery pour les requêtes AJAX -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+     
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/accueil.css') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='img/Z.png') }}">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Accueil</a></li>
+                <li><a href="/realisation">Réalisation</a></li>
+                <li><a href="/services">Services</a></li>
+                <li><a href="/contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section>
+            <h1>Bienvenue sur notre site !</h1>
+            <p>Découvrez nos projets, services et contactez-nous pour en savoir plus.</p>
+        </section>
+
+        <section>
+            <h2>Évolution des données du capteur</h2>
+            <!-- Canvas où sera affiché le graphique -->
+            <canvas id="windChart"></canvas>
+        </section>
+    </main>
+
+    <footer>
+        
+        <p1>Tous droits réservés à Lebron James</p1>
+    </footer>
+
+    <script>
+        // Initialisation du graphique
+        var ctx = document.getElementById('windChart').getContext('2d');
+        var windChart = new Chart(ctx, {
+            type: 'line', // Type de graphique : ligne
+            data: {
+                labels: [], // Liste des horodatages
+                datasets: [{
+                    label: 'Vitesse du vent', // Nom de la courbe
+                    data: [], // Liste des valeurs du capteur
+                    borderColor: 'blue', // Couleur de la ligne
+                    borderWidth: 2, // Épaisseur de la ligne
+                    fill: false // Pas de remplissage sous la courbe
+                }]
+            },
+            options: {
+                scales: {
+                    x: { display: true }, // Affichage de l'axe des X
+                    y: { beginAtZero: true } // Commencer l'axe Y à zéro
+                }
+            }
+        });
+
+        // Fonction pour récupérer et mettre à jour les données du graphique
+        function updateChart() {
+            $.getJSON('/data', function(data) { // Envoie une requête GET à l'API Flask
+                var labels = []; // Liste des horodatages
+                var values = []; // Liste des valeurs du capteur
+                
+                data.forEach(function(item) { // Parcours des données reçues
+                    labels.unshift(item[0]);  // Ajout de l'horodatage en premier
+                    values.unshift(item[1]);  // Ajout de la valeur en premier
+                });
+                
+                windChart.data.labels = labels; // Mise à jour des labels du graphique
+                windChart.data.datasets[0].data = values; // Mise à jour des données du graphique
+                windChart.update(); // Rafraîchissement du graphique
+            });
+        }
+
+        // Rafraîchissement automatique du graphique toutes les 5 secondes
+        setInterval(updateChart, 5000);
+        updateChart(); // Chargement initial des données
+    </script>
+</body>
+</html>
